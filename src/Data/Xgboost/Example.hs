@@ -8,4 +8,7 @@ import Foreign.C
 foreign import ccall "test.c test"
   test :: CInt -> IO CInt
 
+foreign export ccall triple :: Int -> Int
+triple = (* 3)
+
 

@@ -1,6 +1,10 @@
 #include <stdlib.h>
 
+// extern triple;
+
 __stdcall int test(int a) {
-  return a + 1;
+  return triple(a) + 1;
 }
+
+
 
