@@ -1,3 +1,5 @@
+{-# CFILES test.c #-} 
+
 module Data.Xgboost.Example (
   test
 ) where

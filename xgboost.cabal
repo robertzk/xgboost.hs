@@ -42,7 +42,13 @@ Library
   -- hs-source-dirs:      
 
   c-sources:
-    src-c/test.c
+    src-c/test.c,
+    src-c/xgboost/subtree/rabit/include/**/.h,
+    src-c/xgboost/subtree/rabit/include/**/.c,
+    src-c/xgboost/subtree/rabit/src,
+    src-c/xgboost/wrapper/xgboost_wrapper.h,
+    src-c/xgboost/wrapper/xgboost_wrapper.cpp,
+    src-c/xgboost/src
   
   -- Base language which the package is written in.
   default-language:    Haskell2010
