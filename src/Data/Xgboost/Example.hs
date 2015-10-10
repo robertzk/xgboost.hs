@@ -1,3 +1,4 @@
+{-# LANGUAGE ForeignFunctionInterface #-}
 {-# CFILES test.c #-} 
 
 module Data.Xgboost.Example (
