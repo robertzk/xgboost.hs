@@ -1,0 +1,3 @@
+[submodule "xgboost"]
+	path = src-c/xgboost
+	url = git@github.com:dmlc/xgboost.git
