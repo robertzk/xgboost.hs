@@ -1,15 +1,15 @@
 {-# LANGUAGE DataKinds #-} 
 
-module Data.Matrix.Construct (
-  matrix, Matrix
+module Data.Xgboost.Construct (
+  xgboost, Xgboost
 ) where
 
 import qualified Data.Vector as V
 
-matrix :: Num a => a
-matrix = 1
+xgboost :: Num a => a
+xgboost = 1
 
-data Matrix a = M {
+data Xgboost a = M {
    nrow :: Int
  , ncol :: Int
  , vect :: V.Vector a

@@ -54,8 +54,9 @@ Library
 
   -- Modules exported by the library.
   exposed-modules:     
-    Data.Matrix
-    Data.Matrix.Construct
+    Data.Xgboost
+    Data.Xgboost.Construct
+    Data.Xgboost.Example
   
   -- Modules included in this library but not exported.
   -- other-modules:       
@@ -69,6 +70,9 @@ Library
   
   -- Directories containing source files.
   -- hs-source-dirs:      
+
+  c-sources:
+    src-c/test.c
   
   -- Base language which the package is written in.
   default-language:    Haskell2010
