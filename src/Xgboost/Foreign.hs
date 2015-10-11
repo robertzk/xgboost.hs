@@ -14,6 +14,7 @@ import Foreign.Ptr
 
 type DMatrixHandle = Ptr ()
 type BoosterHandle = Ptr ()
+type FloatArray    = Ptr CFloat
 
 -- For the prelude of the extracted C documentation, see
 -- xgboost/wrapper/xgboost_wrapper.h
@@ -48,7 +49,7 @@ XGB_DLL int XGDMatrixCreateFromFile(const char *fname,
                                     DMatrixHandle *out);
 -}
 foreign import ccall "XGDMatrixCreateFromCSR"
-  xgboostMatrixCreateFromCSR :: (Ptr CULong) -> (Ptr CUInt) -> (Ptr CFloat) -> CULong -> CULong -> (Ptr DMatrixHandle) -> IO CInt
+  xgboostMatrixCreateFromCSR :: (Ptr CULong) -> (Ptr CUInt) -> FloatArray -> CULong -> CULong -> (Ptr DMatrixHandle) -> IO CInt
 
 {-
 /*!
@@ -63,7 +64,7 @@ XGB_DLL int XGDMatrixCreateFromFile(const char *fname,
                                     DMatrixHandle *out);
 -}
 foreign import ccall "XGDMatrixCreateFromFile"
-  xgboostMatrixCreateFromFile :: (Ptr CFloat) -> CInt -> CULong -> CFloat -> (Ptr DMatrixHandle) -> IO CInt
+  xgboostMatrixCreateFromFile :: FloatArray -> CInt -> CULong -> CFloat -> (Ptr DMatrixHandle) -> IO CInt
 
 {-
 /*!
@@ -82,7 +83,7 @@ XGB_DLL int XGDMatrixCreateFromMat(const float *data,
                                    DMatrixHandle *out);
 -}
 foreign import ccall "XGDMatrixCreateFromMat"
-  xgboostMatrixCreateFromMat :: (Ptr CFloat) -> CULong -> CULong -> CFloat -> (Ptr DMatrixHandle) -> IO CInt
+  xgboostMatrixCreateFromMat :: FloatArray -> CULong -> CULong -> CFloat -> (Ptr DMatrixHandle) -> IO CInt
 
 {-
 /*!
@@ -140,7 +141,7 @@ XGB_DLL int XGDMatrixSetFloatInfo(DMatrixHandle handle,
                                   bst_ulong len);
 -}
 foreign import ccall "XGDMatrixSetFloatInfo"
-  xgboostMatrixSetFloatInfo :: DMatrixHandle -> CString -> (Ptr CFloat) -> CULong -> IO CInt
+  xgboostMatrixSetFloatInfo :: DMatrixHandle -> CString -> FloatArray -> CULong -> IO CInt
 
 {-
 /*!
@@ -188,7 +189,7 @@ XGB_DLL int XGDMatrixGetFloatInfo(const DMatrixHandle handle,
                                   const float **out_dptr);
 -}
 foreign import ccall "XGMMatrixGetFloatInfo"
-  xgboostMatrixGetFloatInfo :: DMatrixHandle -> CString -> (Ptr CULong) -> IO (Ptr (Ptr CFloat))
+  xgboostMatrixGetFloatInfo :: DMatrixHandle -> CString -> (Ptr CULong) -> IO (Ptr FloatArray)
 
 {-
 /*!
@@ -304,7 +305,7 @@ XGB_DLL int XGBoosterBoostOneIter(BoosterHandle handle,
                                   bst_ulong len);
 -}
 foreign import ccall "XGBoosterBoostOneIter"
-  xgboostBoosterBoostOneIter :: BoosterHandle -> DMatrixHandle -> (Ptr CFloat) -> (Ptr CFloat)  -> CULong -> IO CInt
+  xgboostBoosterBoostOneIter :: BoosterHandle -> DMatrixHandle -> FloatArray -> FloatArray  -> CULong -> IO CInt
 
 {-
 /*!
@@ -348,6 +349,11 @@ XGB_DLL int XGBoosterPredict(BoosterHandle handle,
                              unsigned ntree_limit,
                              bst_ulong *out_len,
                              const float **out_result);
+-}
+foreign import ccall "XGBoosterPredict"
+  xgboostBoosterPredict :: BoosterHandle -> DMatrixHandle -> CInt -> CUInt -> (Ptr FloatArray) -> IO CInt
+
+{-
 /*!
  * \brief load model from existing file
  * \param handle handle
