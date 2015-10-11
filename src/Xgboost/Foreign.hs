@@ -15,6 +15,7 @@ import Foreign.Ptr
 type DMatrixHandle = Ptr ()
 type BoosterHandle = Ptr ()
 type FloatArray    = Ptr CFloat
+type ModelDump     = Ptr Cstring
 
 -- For the prelude of the extracted C documentation, see
 -- xgboost/wrapper/xgboost_wrapper.h
@@ -362,6 +363,11 @@ foreign import ccall "XGBoosterPredict"
  */
 XGB_DLL int XGBoosterLoadModel(BoosterHandle handle,
                                const char *fname);
+-}
+foreign import ccall "XGBoosterLoadModel"
+  xgboostBoosterLoadModel :: BoosterHandle -> CString -> IO CInt
+
+{-
 /*!
  * \brief save model into existing file
  * \param handle handle
@@ -370,6 +376,11 @@ XGB_DLL int XGBoosterLoadModel(BoosterHandle handle,
  */
 XGB_DLL int XGBoosterSaveModel(BoosterHandle handle,
                                const char *fname);
+-}
+foreign import ccall "XGBoosterSaveModel"
+  xgboostBoosterSaveModel :: BoosterHandle -> CString -> IO CInt
+
+{-
 /*!
  * \brief load model from in memory buffer
  * \param handle handle
@@ -380,6 +391,11 @@ XGB_DLL int XGBoosterSaveModel(BoosterHandle handle,
 XGB_DLL int XGBoosterLoadModelFromBuffer(BoosterHandle handle,
                                          const void *buf,
                                          bst_ulong len);
+-}
+foreign import ccall "XGBoosterLoadModelFromBuffer"
+  xgboostBoosterLoadModelFromBuffer :: BoosterHandle -> Ptr () -> CULong -> IO CInt
+
+{-
 /*!
  * \brief save model into binary raw bytes, return header of the array
  * user must copy the result out, before next xgboost call
@@ -391,6 +407,11 @@ XGB_DLL int XGBoosterLoadModelFromBuffer(BoosterHandle handle,
 XGB_DLL int XGBoosterGetModelRaw(BoosterHandle handle,
                                  bst_ulong *out_len,
                                  const char **out_dptr);
+-}
+foreign import ccall "XGBoosterGetModelRaw"
+  xgboostBoosterGetModelRaw :: BoosterHandle -> CULong -> (Ptr CString) -> IO CInt
+
+{-
 /*!
  * \brief dump model, return array of strings representing model dump
  * \param handle handle
@@ -405,7 +426,11 @@ XGB_DLL int XGBoosterDumpModel(BoosterHandle handle,
                                int with_stats,
                                bst_ulong *out_len,
                                const char ***out_dump_array);
+-}
+foreign import ccall "XGBoosterDumpModel"
+  xgboostBoosterDumpMoel :: BoosterHandle -> CString -> CInt -> (Ptr CULong) -> (Ptr ModelDump) -> IO CInt
 
+{-
 /*!
  * \brief dump model, return array of strings representing model dump
  * \param handle handle
@@ -425,6 +450,8 @@ XGB_DLL int XGBoosterDumpModelWithFeatures(BoosterHandle handle,
                                            bst_ulong *len,
                                            const char ***out_models);
 -}
+foreign import ccall "XGBoosterDumpModel"
+  xgboostBoosterDumpMoel :: BoosterHandle -> CInt -> (Ptr CString) -> (Ptr CString) -> CInt -> (Ptr CULong) -> (Ptr ModelDump) -> IO CInt
 
 foreign import ccall "test.c test"
   test :: CInt -> IO CInt
