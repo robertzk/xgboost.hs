@@ -1,5 +1,6 @@
-## eXtreme Gradient Boosting in Haskell [![Build Status](https://travis-ci.org/robertzk/xgboost.hs.svg?branch=master)](https://travis-ci.org/robertzk/xgboost.hs.svg?branch=master) [![Gitter chat for developers at https://gitter.im/dmlc/xgboost](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dmlc/xgboost?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+## eXtreme Gradient Boosting in Haskell
 
+[![Build Status](https://travis-ci.org/robertzk/xgboost.hs.svg?branch=master)](https://travis-ci.org/robertzk/xgboost.hs.svg?branch=master) [![Gitter chat for developers at https://gitter.im/dmlc/xgboost](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dmlc/xgboost?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 A Haskell wrapper for [DMLC](https://github.com/dmlc)'s
 [xgboost](https://github.com/dmlc/xgboost) machine learning library.
 
