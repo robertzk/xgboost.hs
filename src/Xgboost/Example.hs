@@ -4,9 +4,8 @@
 
 module Xgboost.Example (
   test, test3,
-  
-  xgboostDMatrixCreateFromMat, new, DMatrixHandle, DMH, Ptr, cnew,
-  xgboostDMatrixNumRow, xgboostDMatrixNumCol
+   
+  new, DMatrixHandle, DMH, Ptr, cnew,
 ) where
 
 import qualified Foreign
@@ -63,16 +62,6 @@ floatSize         = 4
 
 infixl 0 ->>
 c ->> m = m c
-
--- https://wiki.haskell.org/CPlusPlus_from_Haskell
-foreign import ccall "XGDMatrixCreateFromMat"
-  xgboostDMatrixCreateFromMat :: (Ptr CFloat) -> CULong -> CULong -> CFloat -> (Ptr (Ptr ())) -> IO CInt
-
-foreign import ccall "XGDMatrixNumRow"
-  xgboostDMatrixNumRow :: (Ptr ()) -> (Ptr CULong) -> IO CInt
-
-foreign import ccall "XGDMatrixNumCol"
-  xgboostDMatrixNumCol :: (Ptr ()) -> (Ptr CULong) -> IO CInt
 
 foreign import ccall "_Znwm" cnew :: Foreign.Word -> IO (Ptr ())
 

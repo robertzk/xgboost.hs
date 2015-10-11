@@ -87,6 +87,7 @@ Library
     Xgboost
     Xgboost.Construct
     Xgboost.Example
+    Xgboost.Foreign
   
   -- Modules included in this library but not exported.
   -- other-modules:       
