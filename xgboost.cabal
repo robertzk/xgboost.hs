@@ -1,141 +1,57 @@
-Name:                xgboost
-Version:             0.1.0.3
-Synopsis:            A foreign interface to the Xgboost library
-Category:            Data Mining, Machine Learning, Algorithms, Data structures
-License:             MIT
-License-file:        LICENSE
-Author:              Robert Krzyzanowski
-Maintainer:          technoguyrob@gmail.com
-Build-type:          Custom
-Cabal-Version:       >= 1.10
-Homepage:            https://github.com/robertzk/xgboost.hs
-Bug-Reports:         https://github.com/robertzk/xgboost.hs/issues
+name:                xgboost
+version:             0.1.0.3
+synopsis:            A foreign interface to the Xgboost library
+category:            Data Mining, Machine Learning, Algorithms, Data structures
+license:             MIT
+license-file:        LICENSE
+author:              Robert Krzyzanowski
+maintainer:          technoguyrob@gmail.com
+build-type:          Custom
+cabal-version:       >= 1.10
+homepage:            https://github.com/robertzk/xgboost.hs
+bug-reports:         https://github.com/robertzk/xgboost.hs/issues
 
-Description:
+description:
   A foreign function interface to the <https://github.com/dmlc/xgboost Xgboost>
   C library for gradient-boosted distributed trees.
 
-----------------------------------------------------------------------
-
 extra-source-files:
     README.md,
---    xgboost/wrapper/xgboost_wrapper.h,
---    xgboost/wrapper/xgboost_wrapper.cpp,
---    xgboost/src/utils/base64-inl.h,
---    xgboost/src/utils/bitmap.h,
---    xgboost/src/utils/config.h,
---    xgboost/src/utils/fmap.h,
---    xgboost/src/utils/group_data.h,
---    xgboost/src/utils/io.h,
---    xgboost/src/utils/iterator.h,
---    xgboost/src/utils/math.h,
---    xgboost/src/utils/omp.h,
---    xgboost/src/utils/quantile.h,
---    xgboost/src/utils/random.h,
---    xgboost/src/utils/thread.h,
---    xgboost/src/utils/thread_buffer.h,
---    xgboost/src/utils/utils.h,
---    xgboost/src/data.h,
---    xgboost/src/learner/dmatrix.h,
---    xgboost/src/learner/evaluation-inl.hpp,
---    xgboost/src/learner/evaluation.h,
---    xgboost/src/learner/helper_utils.h,
---    xgboost/src/learner/learner-inl.hpp,
---    xgboost/src/learner/objective-inl.hpp,
---    xgboost/src/learner/objective.h,
---    xgboost/src/tree/updater.cpp ,
---    xgboost/src/tree/updater.hpp,
---    xgboost/src/tree/updater_basemaker-inl.hpp,
---    xgboost/src/tree/updater_colmaker-inl.hpp,
---    xgboost/src/tree/updater_distcol-inl.hpp,
---    xgboost/src/tree/updater_histmaker-inl.hpp,
---    xgboost/src/tree/updater_prune-inl.hpp,
---    xgboost/src/tree/updater_refresh-inl.hpp,
---    xgboost/src/tree/updater_skmaker-inl.hpp,
---    xgboost/src/tree/updater_sync-inl.hpp,
---    xgboost/src/gbm/gbm.cpp,
---    xgboost/src/gbm/gblinear-inl.hpp,
---    xgboost/src/gbm/gbtree-inl.hpp,
---    xgboost/src/gbm/gbm.h,
---    xgboost/src/io/dmlc_simple.cpp,
---    xgboost/src/io/io.cpp,
---    xgboost/src/io/page_dmatrix-inl.hpp,
---    xgboost/src/io/page_fmatrix-inl.hpp,
---    xgboost/src/io/simple_dmatrix-inl.hpp,
---    xgboost/src/io/simple_fmatrix-inl.hpp,
---    xgboost/subtree/rabit/guide/basic.cc,
---    xgboost/subtree/rabit/guide/broadcast.cc,
---    xgboost/subtree/rabit/guide/lazy_allreduce.cc,
---    xgboost/subtree/rabit/src/allreduce_base.cc,
---    xgboost/subtree/rabit/src/allreduce_robust.cc,
---    xgboost/subtree/rabit/src/engine.cc,
---    xgboost/subtree/rabit/src/engine_base.cc,
---    xgboost/subtree/rabit/src/engine_empty.cc,
---    xgboost/subtree/rabit/src/engine_mock.cc,
---    xgboost/subtree/rabit/src/engine_mpi.cc,
---    xgboost/subtree/rabit/wrapper/rabit_wrapper.cc,
     cbits,
     include
 
 Library
-  --cc-options: -Wall xgboost/dmlc_simple.o xgboost/updater.o xgboost/gbm.o xgboost/main.o xgboost/io.o
-
   hs-source-dirs: src
 
-  -- Modules exported by the library.
   exposed-modules:     
     Xgboost
     Xgboost.Construct
     Xgboost.Example
     Xgboost.Foreign
   
-  -- Modules included in this library but not exported.
-  -- other-modules:       
-  
-  -- LANGUAGE extensions used by modules in this package.
-  -- other-extensions:    
-  
-  -- Other library packages from which modules are imported.
-  build-depends:       base >=4.7 && <4.8,
+  build-depends:       base >= 4.7 && < 4.8,
                        vector
   
-  Include-dirs:
---    ./xgboost/wrapper,
---    ./xgboost/src/utils,
---    ./xgboost/src,
---    ./xgboost/src/learner,
---    ./xgboost/src/tree,
---    ./xgboost/src/gbm,
---    ./xgboost/src/io,
---    ./xgboost/subtree/rabit/guide,
---    ./xgboost/subtree/rabit/src,
---    ./xgboost/subtree/rabit/wrapper,
+  include-dirs:
     ./include
 
-  --Extra-Libraries:
-  --  xgboostwrapper
-
-  --Extra-Lib-Dirs:
-  --  /Users/robertk/custom_lib,
-  --  /usr/lib,
-  --  /usr/local/lib
-
-  Includes:
+  includes:
     ./include/test.h
 
-  C-sources:
+  c-sources:
     ./cbits/test.c
 
-  Other-Extensions: CPP
+  other-extensions: CPP
               , ForeignFunctionInterface
               , EmptyDataDecls
               , RecordWildCards
   
   -- Base language which the package is written in.
-  Default-Language:    Haskell2010
+  default-language:    Haskell2010
 
-  --if (arch(i386) || arch(x86_64))
-  cpp-options: -DARCH_X86 -dynamic -Wall -msse2 -Wno-unknown-pragmas -funroll-loops -DDISABLE_OPENMP -static-libgcc -fPIC -lxgboostwrapper -L/Users/robertk/dev/xgboost.hs/xgboost/wrapper
+  if (arch(i386) || arch(x86_64))
+    cpp-options: -DARCH_X86 -dynamic -Wall -msse2 -Wno-unknown-pragmas -funroll-loops -DDISABLE_OPENMP -static-libgcc -fPIC
+  -- TODO: (RK) Else...?
 
 Test-Suite test-xgboost
   type:           exitcode-stdio-1.0
