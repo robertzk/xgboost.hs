@@ -1,0 +1,18 @@
+language: haskell
+ghc: 7.8
+script:
+- cabal configure --enable-tests && cabal build && cabal test
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+  hipchat:
+    on_success: change
+    on_failure: change
+    template:
+    - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}
+      | Details: %{build_url} | Changes: %{compare_url}"
+    rooms:
+      secure: o/IW+A4bx/eQhhF6w6IY5/nsfHoUF+KNT3vm7/wuV/vmjpOxH7bf98vWcD4Y93aTGIzr6ETQvnSWXNM72lcuUU0C7eV3zcThbd6TToyX8P9SM4noHQaMKl44J2YbUH8ERhLLRdFlLyWZl/tcsem9TpX6RAs/BzOh6m+p/iwdeMGY+3RNxpxGxb7gmCddqv0cbSGXsD7DyN2e1eB2BBrvFuObWf2RYR58SAe+V1ixJCjmgRc5qD2URk0a82Uf45uOX/wkFlToqRbqNgQH+nmRR2DtPa34tn9p36aKwcb9vstTo6UXrSNRgoxBf4oeQmIEqKFhE1FHcF5nUXTZM+C0xCCESEGlnEFUsIjCDNqU23U68g74PZFhtvgQVPSZQmu2lMlLlfUVLZC3xVLnkyA8uutR/jLNVCKtGIDNADN8nEmHiaXcIDKGYfutvNAEuOP4Ns41uGc3jmtPQQDYDWEzfXt2UJ+WgzIDo0eNYPZxyo2qs7zK1zR/lZPdgrCzOy+b628En93ZLCMwawTzDp2jZZHZ/FySWPjlddei5d3JjQhdmBTZSvIWSDScwwsK8WBQawBkoL5vnoQiLEXAsbHbF+bkcdhsoEmAjyJIG0pQXN871gpPEWMJXv/JFe8RARP1Q6Ld+szlmhVe48qVB3jHUuokrzIkfWi3sNRYy5EF8Gw=
+  rooms:
+    secure: l+wmlZJjYTD9Gv+oSp+y5IE6UFAwGEbfiUdoIU8VA4AihIsarEu9/h1WfuZLf00qlxktx45BLsecvn5QGX+IHVTXDFxmYyL+pzuTdNYZjc87EutstyJ1Ahdt5IA49A8X+PHAO7v60XIjrUrXPKwx3vxsVmO1RSayo0xAwfnupmk=

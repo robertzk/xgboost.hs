@@ -2,7 +2,7 @@
 
 // extern triple;
 
-__stdcall int test(int a) {
+int test(int a) {
   return triple(a) + 2;
 }
 
