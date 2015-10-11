@@ -3,6 +3,7 @@ import Distribution.Simple.Setup
 import Distribution.Simple.Utils (rawSystemExit)
 import System.Environment (lookupEnv, setEnv)
 
+-- Blatantly borrowed from http://blog.ezyang.com/2010/06/setting-up-cabal-the-ffi-and-c2hs/
 main = defaultMainWithHooks simpleUserHooks
     { preBuild = \a b -> makeLib a b >> preBuild simpleUserHooks a b }
 
