@@ -2,10 +2,50 @@
 -- However, we use the C interface to Xgboost.
 
 module Xgboost.Foreign ( 
+  
+  -- Error handling
   xgboostGetLastError,
+
+  -- Data I/O
+  xgboostMatrixCreateFromCSR,
+  xgboostMatrixCreateFromFile,
   xgboostMatrixCreateFromMat,
+  xgboostMatrixSliceDMatrix,
+  xgboostMatrixFree,
+  xgboostMatrixSaveBinary,
+
+  -- Mutators for matrix meta-data
+  xgboostMatrixSetFloatInfo,
+  xgboostMatrixSetUIntInfo,
+  xgboostMatrixSetGroup,
+
+  -- Accessors for matrix meta-data
+  xgboostMatrixGetFloatInfo,
+  xgboostMatrixGetUIntInfo,
   xgboostMatrixNumRow,
-  xgboostMatrixNumCol
+  xgboostMatrixNumCol,
+
+  -- Booster object construction and manipulation
+  xgboostBoosterCreate,
+  xgboostBoosterFree,
+  xgboostBoosterSetParam, 
+
+  -- Booster training methods
+  xgboostBoosterUpdateOneIter,
+  xgboostBoosterBoostOneIter,
+  xgboostBoosterEvalOneIter,
+
+  -- Booster predict methods
+  xgboostBoosterPredict,
+  
+  -- Booster object I/O
+  xgboostBoosterLoadModel, 
+  xgboostBoosterSaveModel, 
+  xgboostBoosterLoadModelFromBuffer, 
+  xgboostBoosterGetModelRaw, 
+  xgboostBoosterDumpModel, 
+  xgboostBoosterDumpModelWithFeatures, 
+
 ) where
 
 import qualified Foreign
@@ -15,7 +55,7 @@ import Foreign.Ptr
 type DMatrixHandle = Ptr ()
 type BoosterHandle = Ptr ()
 type FloatArray    = Ptr CFloat
-type ModelDump     = Ptr Cstring
+type ModelDump     = Ptr CString
 
 -- For the prelude of the extracted C documentation, see
 -- xgboost/wrapper/xgboost_wrapper.h
@@ -428,7 +468,7 @@ XGB_DLL int XGBoosterDumpModel(BoosterHandle handle,
                                const char ***out_dump_array);
 -}
 foreign import ccall "XGBoosterDumpModel"
-  xgboostBoosterDumpMoel :: BoosterHandle -> CString -> CInt -> (Ptr CULong) -> (Ptr ModelDump) -> IO CInt
+  xgboostBoosterDumpModel :: BoosterHandle -> CString -> CInt -> (Ptr CULong) -> (Ptr ModelDump) -> IO CInt
 
 {-
 /*!
@@ -450,8 +490,8 @@ XGB_DLL int XGBoosterDumpModelWithFeatures(BoosterHandle handle,
                                            bst_ulong *len,
                                            const char ***out_models);
 -}
-foreign import ccall "XGBoosterDumpModel"
-  xgboostBoosterDumpMoel :: BoosterHandle -> CInt -> (Ptr CString) -> (Ptr CString) -> CInt -> (Ptr CULong) -> (Ptr ModelDump) -> IO CInt
+foreign import ccall "XGBoosterDumpModelWithFeatures"
+  xgboostBoosterDumpModelWithFeatures :: BoosterHandle -> CInt -> (Ptr CString) -> (Ptr CString) -> CInt -> (Ptr CULong) -> (Ptr ModelDump) -> IO CInt
 
 foreign import ccall "test.c test"
   test :: CInt -> IO CInt
