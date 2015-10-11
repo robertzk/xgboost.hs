@@ -1,6 +1,7 @@
 ## eXtreme Gradient Boosting in Haskell [![Build Status](https://travis-ci.org/robertzk/xgboost.hs.svg?branch=master)](https://travis-ci.org/robertzk/xgboost.hs.svg?branch=master)
 
-A Haskell wrapper for xgboost
+A Haskell wrapper for [DMLC](https://github.com/dmlc)'s
+[xgboost](https://github.com/dmlc/xgboost) machine learning library.
 
 ### Development
 
