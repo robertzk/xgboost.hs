@@ -48,7 +48,6 @@ module Xgboost.Foreign (
 
 ) where
 
-import qualified Foreign
 import Foreign.C
 import Foreign.Ptr
 
