@@ -174,6 +174,38 @@ foreign import ccall "XGDMatrixSetGroup"
   xgboostMatrixSetGroup :: DMatrixHandle -> (Ptr CUInt) -> CULong -> IO CInt
 
 {-
+ * \brief get float info vector from matrix
+ * \param handle a instance of data matrix
+ * \param field field name
+ * \param out_len used to set result length
+ * \param out_dptr pointer to the result
+ * \return 0 when success, -1 when failure happens
+ */
+XGB_DLL int XGDMatrixGetFloatInfo(const DMatrixHandle handle,
+                                  const char *field,
+                                  bst_ulong* out_len,
+                                  const float **out_dptr);
+-}
+foreign import ccall "XGMMatrixGetFloatInfo"
+  xgboostMatrixGetFloatInfo :: DMatrixHandle -> CString -> (Ptr CULong) -> IO (Ptr (Ptr CFloat))
+
+{-
+/*!
+ * \brief get uint32 info vector from matrix
+ * \param handle a instance of data matrix
+ * \param field field name
+ * \param out_ptr pointer to the result
+ * \return 0 when success, -1 when failure happens
+ */
+XGB_DLL int XGDMatrixGetUIntInfo(const DMatrixHandle handle,
+                                 const char *field,
+                                 bst_ulong* out_len,
+                                 const unsigned **out_dptr);
+-}
+foreign import ccall "XGMMatrixGetUIntInfo"
+  xgboostMatrixGetUIntInfo :: DMatrixHandle -> CString -> (Ptr CULong) -> IO (Ptr (Ptr CUInt))
+
+{-
 /*!
  * \brief get number of rows
  * \param handle the handle to the DMatrix
