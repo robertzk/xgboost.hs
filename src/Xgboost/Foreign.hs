@@ -1,5 +1,6 @@
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE EmptyDataDecls #-}
 {-# CFILES xgboost_wrapper.cpp #-} 
 
 -- https://wiki.haskell.org/CPlusPlus_from_Haskell
