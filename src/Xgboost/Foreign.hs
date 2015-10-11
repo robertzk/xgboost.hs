@@ -29,6 +29,21 @@ foreign import ccall "XGDMatrixCreateFromMat"
 foreign import ccall "XGDMatrixSliceDMatrix"
   xgboostMatrixSliceDMatrix :: DMatrixHandle -> (Ptr CInt) -> CULong -> (Ptr DMatrixHandle) -> IO CInt
 
+foreign import ccall "XGDMatrixFree"
+  xgboostMatrixFree :: DMatrixHandle -> IO CInt
+
+foreign import ccall "XGDMatrixSaveBinary"
+  xgboostMatrixSaveBinary :: DMatrixHandle -> CString -> CInt -> IO CInt
+
+foreign import ccall "XGDMatrixSetFloatInfo"
+  xgboostMatrixSetFloatInfo :: DMatrixHandle -> CString -> (Ptr CFloat) -> CULong -> IO CInt
+
+foreign import ccall "XGDMatrixSetUIntInfo"
+  xgboostMatrixSetUIntInfo :: DMatrixHandle -> CString -> (Ptr CUInt) -> CULong -> IO CInt
+
+foreign import ccall "XGDMatrixSetGroup"
+  xgboostMatrixSetGroup :: DMatrixHandle -> (Ptr CUInt) -> CULong -> IO CInt
+
 foreign import ccall "XGDMatrixNumRow"
   xgboostMatrixNumRow :: DMatrixHandle -> (Ptr CULong) -> IO CInt
 
