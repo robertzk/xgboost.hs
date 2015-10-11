@@ -12,4 +12,4 @@ makeLib _ flags = do
   cflags <- lookupEnv "CFLAGS" >>= return . maybe "" id
   setEnv "CFLAGS" $ "-fPIC -D_LIB" ++ (' ' : cflags)
   rawSystemExit verbosity "env"
-      ["make", "--directory=xgboost", "libxgboostwrapper.so"]
+      ["make", "--directory=xgboost", "wrapper/libxgboostwrapper.so"]
