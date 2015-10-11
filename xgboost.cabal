@@ -84,9 +84,9 @@ Library
 
   -- Modules exported by the library.
   exposed-modules:     
-    Data.Xgboost
-    Data.Xgboost.Construct
-    Data.Xgboost.Example
+    Xgboost
+    Xgboost.Construct
+    Xgboost.Example
   
   -- Modules included in this library but not exported.
   -- other-modules:       

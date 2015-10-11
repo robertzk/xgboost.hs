@@ -2,7 +2,7 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# CFILES test.c xgboost_wrapper.cpp #-} 
 
-module Data.Xgboost.Example (
+module Xgboost.Example (
   test, test3,
   
   xgboostDMatrixCreateFromMat, new, DMatrixHandle, DMH, Ptr, cnew,
@@ -77,7 +77,7 @@ foreign import ccall "XGDMatrixNumCol"
 foreign import ccall "_Znwm" cnew :: Foreign.Word -> IO (Ptr ())
 
 {-
-  import Data.Xgboost
+  import Xgboost
   import System.IO.Unsafe
   import Foreign.C
   import Foreign.Storable

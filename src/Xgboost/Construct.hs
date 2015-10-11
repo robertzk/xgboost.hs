@@ -1,6 +1,6 @@
 {-# LANGUAGE DataKinds #-} 
 
-module Data.Xgboost.Construct (
+module Xgboost.Construct (
   xgboost, Xgboost
 ) where
 
