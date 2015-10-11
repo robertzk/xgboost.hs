@@ -1,5 +1,5 @@
 Name:                xgboost
-Version:             0.1.0.2
+Version:             0.1.0.3
 Synopsis:            A foreign interface to the Xgboost library
 Category:            Data Mining, Machine Learning, Algorithms, Data structures
 License:             MIT
@@ -137,6 +137,5 @@ Library
   Default-Language:    Haskell2010
 
   --if (arch(i386) || arch(x86_64))
-  --cpp-options: -DARCH_X86 -Wall -msse2 -Wno-unknown-pragmas -funroll-loops -DDISABLE_OPENMP -static-libgcc -static-libstdc++ -std=c++11 -fPIC -lstdc++ xgboost/wrapper/libxgboostwrapper.so
   cpp-options: -DARCH_X86 -dynamic -Wall -msse2 -Wno-unknown-pragmas -funroll-loops -DDISABLE_OPENMP -static-libgcc -fPIC -lxgboostwrapper -L/Users/robertk/dev/xgboost.hs/xgboost/wrapper
    

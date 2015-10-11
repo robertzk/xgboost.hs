@@ -5,7 +5,8 @@
 module Data.Xgboost.Example (
   test, test3,
   
-  xgboostDMatrixCreateFromMat, new, DMatrixHandle, DMH, Ptr, cnew
+  xgboostDMatrixCreateFromMat, new, DMatrixHandle, DMH, Ptr, cnew,
+  xgboostDMatrixNumRow, xgboostDMatrixNumCol
 ) where
 
 import qualified Foreign
@@ -36,6 +37,9 @@ instance New DMH where
 instance New () where
   new = hnew voidPtrSize
 
+instance New (Ptr ()) where
+  new = hnew voidPtrSize
+
 instance New CFloat where
   new = hnew floatSize
 
@@ -62,7 +66,13 @@ c ->> m = m c
 
 -- https://wiki.haskell.org/CPlusPlus_from_Haskell
 foreign import ccall "XGDMatrixCreateFromMat"
-  xgboostDMatrixCreateFromMat :: (Ptr CFloat) -> CULong -> CULong -> CFloat -> (Ptr ()) -> IO CInt
+  xgboostDMatrixCreateFromMat :: (Ptr CFloat) -> CULong -> CULong -> CFloat -> (Ptr (Ptr ())) -> IO CInt
+
+foreign import ccall "XGDMatrixNumRow"
+  xgboostDMatrixNumRow :: (Ptr ()) -> (Ptr CULong) -> IO CInt
+
+foreign import ccall "XGDMatrixNumCol"
+  xgboostDMatrixNumCol :: (Ptr ()) -> (Ptr CULong) -> IO CInt
 
 foreign import ccall "_Znwm" cnew :: Foreign.Word -> IO (Ptr ())
 
@@ -70,11 +80,22 @@ foreign import ccall "_Znwm" cnew :: Foreign.Word -> IO (Ptr ())
   import Data.Xgboost
   import System.IO.Unsafe
   import Foreign.C
+  import Foreign.Storable
+  import Foreign.Ptr
   let dat = unsafePerformIO $ (new :: IO (Ptr CFloat))
   let nrow = 1 :: CULong
   let missing = 0.5 :: CFloat
-  let dmh = unsafePerformIO $ (new :: IO (Ptr ()))
+  let dmh = unsafePerformIO $ (new :: IO (Ptr (Ptr ())))
   let mat = xgboostDMatrixCreateFromMat dat nrow nrow missing dmh
   mat
+
+  let r  = unsafePerformIO $ (new :: IO (Ptr CULong))
+  let rs = xgboostDMatrixNumRow (unsafePerformIO $ peek dmh) r
+  rs
+  peek r
+  let c  = unsafePerformIO $ (new :: IO (Ptr CULong))
+  let cs = xgboostDMatrixNumCol (unsafePerformIO $ peek dmh) c
+  cs
+  peek c
 -}
 
