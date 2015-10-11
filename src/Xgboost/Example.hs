@@ -5,7 +5,7 @@
 module Xgboost.Example (
   test, test3,
    
-  new, DMatrixHandle, DMH, Ptr, cnew,
+  new, MatrixHandle, DMH, Ptr, cnew,
 ) where
 
 import qualified Foreign
@@ -21,13 +21,13 @@ triple = (* 3)
 test3 :: Int -> Int
 test3 = (* 8)
 
-data DMatrixHandle = DMatrixHandle deriving (Show, Eq)
+data MatrixHandle = MatrixHandle deriving (Show, Eq)
 newtype DMH = IO (Ptr ())
 
 class New a where
   new :: IO (Ptr a)
 
-instance New DMatrixHandle where
+instance New MatrixHandle where
   new = hnew voidPtrSize
 
 instance New DMH where
@@ -67,6 +67,7 @@ foreign import ccall "_Znwm" cnew :: Foreign.Word -> IO (Ptr ())
 
 {-
   import Xgboost
+  import Xgboost.Foreign
   import System.IO.Unsafe
   import Foreign.C
   import Foreign.Storable
@@ -75,15 +76,15 @@ foreign import ccall "_Znwm" cnew :: Foreign.Word -> IO (Ptr ())
   let nrow = 1 :: CULong
   let missing = 0.5 :: CFloat
   let dmh = unsafePerformIO $ (new :: IO (Ptr (Ptr ())))
-  let mat = xgboostDMatrixCreateFromMat dat nrow nrow missing dmh
+  let mat = xgboostMatrixCreateFromMat dat nrow nrow missing dmh
   mat
 
   let r  = unsafePerformIO $ (new :: IO (Ptr CULong))
-  let rs = xgboostDMatrixNumRow (unsafePerformIO $ peek dmh) r
+  let rs = xgboostMatrixNumRow (unsafePerformIO $ peek dmh) r
   rs
   peek r
   let c  = unsafePerformIO $ (new :: IO (Ptr CULong))
-  let cs = xgboostDMatrixNumCol (unsafePerformIO $ peek dmh) c
+  let cs = xgboostMatrixNumCol (unsafePerformIO $ peek dmh) c
   cs
   peek c
 -}

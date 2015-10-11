@@ -12,22 +12,22 @@ import qualified Foreign
 import Foreign.C
 import Foreign.Ptr
 
-type DMatrixHandle = Ptr ()
+type DMatrixHandle = Ptr (Ptr ())
 
 foreign import ccall "XGBGetLastError"
   xgboostGetLastError :: CString -> IO CInt
 
 foreign import ccall "XGDMatrixCreateFromFile"
-  xgboostMatrixCreateFromFile :: (Ptr CFloat) -> CInt -> CULong -> CFloat -> (Ptr DMatrixHandle) -> IO CInt
+  xgboostMatrixCreateFromFile :: (Ptr CFloat) -> CInt -> CULong -> CFloat -> DMatrixHandle -> IO CInt
 
 foreign import ccall "XGDMatrixCreateFromMat"
-  xgboostMatrixCreateFromMat :: (Ptr CFloat) -> CULong -> CULong -> CFloat -> (Ptr DMatrixHandle) -> IO CInt
+  xgboostMatrixCreateFromMat :: (Ptr CFloat) -> CULong -> CULong -> CFloat -> (Ptr (Ptr ())) -> IO CInt
 
 foreign import ccall "XGDMatrixNumRow"
-  xgboostMatrixNumRow :: DMatrixHandle -> (Ptr CULong) -> IO CInt
+  xgboostMatrixNumRow :: (Ptr ()) -> (Ptr CULong) -> IO CInt
 
 foreign import ccall "XGDMatrixNumCol"
-  xgboostMatrixNumCol :: DMatrixHandle -> (Ptr CULong) -> IO CInt
+  xgboostMatrixNumCol :: (Ptr ()) -> (Ptr CULong) -> IO CInt
 
 foreign import ccall "test.c test"
   test :: CInt -> IO CInt
