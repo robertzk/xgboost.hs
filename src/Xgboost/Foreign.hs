@@ -13,6 +13,7 @@ import Foreign.C
 import Foreign.Ptr
 
 type DMatrixHandle = Ptr ()
+type BoosterHandle = Ptr ()
 
 -- For the prelude of the extracted C documentation, see
 -- xgboost/wrapper/xgboost_wrapper.h
@@ -228,6 +229,172 @@ XGB_DLL int XGDMatrixNumCol(DMatrixHandle handle,
 -}
 foreign import ccall "XGDMatrixNumCol"
   xgboostMatrixNumCol :: DMatrixHandle -> (Ptr CULong) -> IO CInt
+
+{-
+/*!
+ * \brief create xgboost learner
+ * \param dmats matrices that are set to be cached
+ * \param len length of dmats
+ * \param out handle to the result booster
+ * \return 0 when success, -1 when failure happens
+ */
+XGB_DLL int XGBoosterCreate(void* dmats[],
+                            bst_ulong len,
+                            BoosterHandle *out);
+-}
+foreign import ccall "XGBoosterCreate"
+  xgboostBoosterCreate :: (Ptr DMatrixHandle) -> CULong -> (Ptr BoosterHandle) -> IO CInt
+
+{-
+/*!
+ * \brief free obj in handle
+ * \param handle handle to be freed
+ * \return 0 when success, -1 when failure happens
+ */
+XGB_DLL int XGBoosterFree(BoosterHandle handle);
+
+/*!
+ * \brief set parameters
+ * \param handle handle
+ * \param name  parameter name
+ * \param val value of parameter
+ * \return 0 when success, -1 when failure happens
+ */
+XGB_DLL int XGBoosterSetParam(BoosterHandle handle,
+                              const char *name,
+                              const char *value);
+/*!
+ * \brief update the model in one round using dtrain
+ * \param handle handle
+ * \param iter current iteration rounds
+ * \param dtrain training data
+ * \return 0 when success, -1 when failure happens
+ */
+XGB_DLL int XGBoosterUpdateOneIter(BoosterHandle handle,
+                                   int iter,
+                                   DMatrixHandle dtrain);
+/*!
+ * \brief update the model, by directly specify gradient and second order gradient,
+ *        this can be used to replace UpdateOneIter, to support customized loss function
+ * \param handle handle
+ * \param dtrain training data
+ * \param grad gradient statistics
+ * \param hess second order gradient statistics
+ * \param len length of grad/hess array
+ * \return 0 when success, -1 when failure happens
+ */
+XGB_DLL int XGBoosterBoostOneIter(BoosterHandle handle,
+                                  DMatrixHandle dtrain,
+                                  float *grad,
+                                  float *hess,
+                                  bst_ulong len);
+/*!
+ * \brief get evaluation statistics for xgboost
+ * \param handle handle
+ * \param iter current iteration rounds
+ * \param dmats pointers to data to be evaluated
+ * \param evnames pointers to names of each data
+ * \param len length of dmats
+ * \param out_result the string containing evaluation statistics
+ * \return 0 when success, -1 when failure happens
+ */
+XGB_DLL int XGBoosterEvalOneIter(BoosterHandle handle,
+                                 int iter,
+                                 DMatrixHandle dmats[],
+                                 const char *evnames[],
+                                 bst_ulong len,
+                                 const char **out_result);
+/*!
+ * \brief make prediction based on dmat
+ * \param handle handle
+ * \param dmat data matrix
+ * \param option_mask bit-mask of options taken in prediction, possible values
+ *          0:normal prediction
+ *          1:output margin instead of transformed value
+ *          2:output leaf index of trees instead of leaf value, note leaf index is unique per tree
+ * \param ntree_limit limit number of trees used for prediction, this is only valid for boosted trees
+ *    when the parameter is set to 0, we will use all the trees
+ * \param out_len used to store length of returning result
+ * \param out_result used to set a pointer to array
+ * \return 0 when success, -1 when failure happens
+ */
+XGB_DLL int XGBoosterPredict(BoosterHandle handle,
+                             DMatrixHandle dmat,
+                             int option_mask,
+                             unsigned ntree_limit,
+                             bst_ulong *out_len,
+                             const float **out_result);
+/*!
+ * \brief load model from existing file
+ * \param handle handle
+ * \param fname file name
+* \return 0 when success, -1 when failure happens
+ */
+XGB_DLL int XGBoosterLoadModel(BoosterHandle handle,
+                               const char *fname);
+/*!
+ * \brief save model into existing file
+ * \param handle handle
+ * \param fname file name
+ * \return 0 when success, -1 when failure happens
+ */
+XGB_DLL int XGBoosterSaveModel(BoosterHandle handle,
+                               const char *fname);
+/*!
+ * \brief load model from in memory buffer
+ * \param handle handle
+ * \param buf pointer to the buffer
+ * \param len the length of the buffer
+ * \return 0 when success, -1 when failure happens
+ */
+XGB_DLL int XGBoosterLoadModelFromBuffer(BoosterHandle handle,
+                                         const void *buf,
+                                         bst_ulong len);
+/*!
+ * \brief save model into binary raw bytes, return header of the array
+ * user must copy the result out, before next xgboost call
+ * \param handle handle
+ * \param out_len the argument to hold the output length
+ * \param out_dptr the argument to hold the output data pointer
+ * \return 0 when success, -1 when failure happens
+ */
+XGB_DLL int XGBoosterGetModelRaw(BoosterHandle handle,
+                                 bst_ulong *out_len,
+                                 const char **out_dptr);
+/*!
+ * \brief dump model, return array of strings representing model dump
+ * \param handle handle
+ * \param fmap  name to fmap can be empty string
+ * \param with_stats whether to dump with statistics
+ * \param out_len length of output array
+ * \param out_dump_array pointer to hold representing dump of each model
+ * \return 0 when success, -1 when failure happens
+ */
+XGB_DLL int XGBoosterDumpModel(BoosterHandle handle,
+                               const char *fmap,
+                               int with_stats,
+                               bst_ulong *out_len,
+                               const char ***out_dump_array);
+
+/*!
+ * \brief dump model, return array of strings representing model dump
+ * \param handle handle
+ * \param fnum number of features
+ * \param fnum names of features
+ * \param fnum types of features
+ * \param with_stats whether to dump with statistics
+ * \param out_len length of output array
+ * \param out_dump_array pointer to hold representing dump of each model
+ * \return 0 when success, -1 when failure happens
+ */
+XGB_DLL int XGBoosterDumpModelWithFeatures(BoosterHandle handle,
+                                           int fnum,
+                                           const char **fname,
+                                           const char **ftype,
+                                           int with_stats,
+                                           bst_ulong *len,
+                                           const char ***out_models);
+-}
 
 foreign import ccall "test.c test"
   test :: CInt -> IO CInt
