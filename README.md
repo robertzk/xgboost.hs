@@ -3,6 +3,13 @@
 A Haskell wrapper for [DMLC](https://github.com/dmlc)'s
 [xgboost](https://github.com/dmlc/xgboost) machine learning library.
 
+Xgboost is an optimized general purpose gradient boosting library.
+The library is parallelized, and also provides an optimized distributed version.
+
+It implements machine learning algorithms under the Gradient Boosting framework,
+including Generalized Linear Model (GLM) and Gradient Boosted Decision Trees (GBDT).
+XGBoost can also be distributed and scale to Terascale data.
+
 ### Development
 
 To get started, run the standard:
