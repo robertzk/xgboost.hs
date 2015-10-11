@@ -492,7 +492,4 @@ XGB_DLL int XGBoosterDumpModelWithFeatures(BoosterHandle handle,
 foreign import ccall "XGBoosterDumpModelWithFeatures"
   xgboostBoosterDumpModelWithFeatures :: BoosterHandle -> CInt -> (Ptr CString) -> (Ptr CString) -> CInt -> (Ptr CULong) -> (Ptr ModelDump) -> IO CInt
 
-foreign import ccall "test.c test"
-  test :: CInt -> IO CInt
-
 
