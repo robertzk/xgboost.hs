@@ -5,7 +5,7 @@
 module Data.Xgboost.Example (
   test, test3,
   
-  xgboostDMatrixCreateFromMat, new, DMatrixHandle, DMH, Ptr
+  xgboostDMatrixCreateFromMat, new, DMatrixHandle, DMH, Ptr, cnew
 ) where
 
 import qualified Foreign
@@ -36,6 +36,12 @@ instance New DMH where
 instance New () where
   new = hnew voidPtrSize
 
+instance New CFloat where
+  new = hnew floatSize
+
+instance New CULong where
+  new = hnew unsignedLongSize
+
 hnew :: (New a) => Foreign.Word -> IO (Ptr a)
 hnew size = do
   o <- cnew size
@@ -55,8 +61,20 @@ infixl 0 ->>
 c ->> m = m c
 
 -- https://wiki.haskell.org/CPlusPlus_from_Haskell
-foreign import ccall "xgboost_wrapper.cpp _XGDMatrixCreateFromMat"
+foreign import ccall "XGDMatrixCreateFromMat"
   xgboostDMatrixCreateFromMat :: (Ptr CFloat) -> CULong -> CULong -> CFloat -> (Ptr ()) -> IO CInt
 
 foreign import ccall "_Znwm" cnew :: Foreign.Word -> IO (Ptr ())
+
+{-
+  import Data.Xgboost
+  import System.IO.Unsafe
+  import Foreign.C
+  let dat = unsafePerformIO $ (new :: IO (Ptr CFloat))
+  let nrow = 1 :: CULong
+  let missing = 0.5 :: CFloat
+  let dmh = unsafePerformIO $ (new :: IO (Ptr ()))
+  let mat = xgboostDMatrixCreateFromMat dat nrow nrow missing dmh
+  mat
+-}
 

@@ -1,7 +1,7 @@
 module Data.Xgboost (
   xgboost, Xgboost, test, test2, test3,
   
-  xgboostDMatrixCreateFromMat, new, DMatrixHandle, DMH, Ptr
+  xgboostDMatrixCreateFromMat, new, DMatrixHandle, DMH, Ptr, cnew
 ) where
 
 import Data.Xgboost.Construct
