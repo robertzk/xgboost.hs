@@ -20,7 +20,7 @@ foreign export ccall triple :: Int -> Int
 triple = (* 3)
 
 test3 :: Int -> Int
-test3 = (* 6)
+test3 = (* 8)
 
 data DMatrixHandle = DMatrixHandle deriving (Show, Eq)
 newtype DMH = IO (Ptr ())

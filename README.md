@@ -1,4 +1,4 @@
-# xgboost.hs
+# eXtreme Gradient Boosting in Haskell [![Build Status](https://travis-ci.org/robertzk/xgboost.hs.svg?branch=master)](https://travis-ci.org/robertzk/xgboost.hs.svg?branch=master)
 
 A Haskell wrapper for xgboost
 
