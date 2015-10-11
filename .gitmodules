@@ -1,3 +1,3 @@
 [submodule "xgboost"]
 	path = xgboost
-	url = git@github.com:dmlc/xgboost.git
+	url = git@github.com:robertzk/xgboost.git
