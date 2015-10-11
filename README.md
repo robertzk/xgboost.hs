@@ -17,5 +17,6 @@ You can then [enter GHCI with the sandboxed packages](http://stackoverflow.com/q
 
 ```
 # Assuming GHC >= 7.6
-ghci -no-user-package-db -package-db .cabal-sandbox/*.conf.d
+# Note we have to link the dynamic xgboostwrapper library manually when using ghci.
+ghci -no-user-package-db -package-db .cabal-sandbox/*.conf.d -Lxgboost/wrapper -lxgboostwrapper
 ```
