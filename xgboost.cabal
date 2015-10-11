@@ -96,11 +96,8 @@ Library
   
   -- Other library packages from which modules are imported.
   build-depends:       base >=4.7 && <4.8,
-                       vector 
+                       vector
   
-  -- Directories containing source files.
-  -- hs-source-dirs:      
-
   Include-dirs:
 --    ./xgboost/wrapper,
 --    ./xgboost/src/utils,
@@ -138,4 +135,13 @@ Library
 
   --if (arch(i386) || arch(x86_64))
   cpp-options: -DARCH_X86 -dynamic -Wall -msse2 -Wno-unknown-pragmas -funroll-loops -DDISABLE_OPENMP -static-libgcc -fPIC -lxgboostwrapper -L/Users/robertk/dev/xgboost.hs/xgboost/wrapper
+
+Test-Suite test-xgboost
+  type:           exitcode-stdio-1.0
+  hs-source-dirs: tests
+                  src
+  main-is:        Test.hs
+  build-depends:  base,
+                  Cabal >= 1.9.2
+
    
