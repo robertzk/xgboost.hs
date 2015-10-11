@@ -1,4 +1,3 @@
-
 main :: IO ()
 main = do
   check_trivial
@@ -10,5 +9,4 @@ myAssert msg b = putStrLn $ (if b then "Ok, passed " else "Failed test:\n  ") ++
 check_trivial = do
   putStrLn " = Trivial Tests = "
   myAssert "Trivial test" True
-
 
