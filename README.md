@@ -17,6 +17,6 @@ You can then [enter GHCI with the sandboxed packages](http://stackoverflow.com/q
 
 ```
 # Assuming GHC >= 7.6
-# Note we have to link the dynamic xgboostwrapper library manually when using ghci.
+# Note we have to link the dynamic xgboostwrapper library manually when using ghci: http://stackoverflow.com/questions/6323755/osx-ghci-dylib-what-is-the-correct-way
 ghci -no-user-package-db -package-db .cabal-sandbox/*.conf.d -Lxgboost/wrapper -lxgboostwrapper
 ```
