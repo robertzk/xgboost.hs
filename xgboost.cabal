@@ -46,7 +46,6 @@ Library
               , EmptyDataDecls
               , RecordWildCards
   
-  -- Base language which the package is written in.
   default-language:    Haskell2010
 
   if (arch(i386) || arch(x86_64))
@@ -59,6 +58,16 @@ Test-Suite test-xgboost
                   src
   main-is:        Test.hs
   build-depends:  base,
-                  Cabal >= 1.9.2
+                  Cabal >= 1.9.2,
+                  vector,
+                  xgboost
+  --extra-include-dirs: /opt/local/include
+  --extra-lib-dirs: /opt/local/lib
+  cpp-options: -DARCH_X86 -dynamic -Wall -msse2 -Wno-unknown-pragmas -funroll-loops -DDISABLE_OPENMP -static-libgcc -fPIC
+  ghc-options: xgboost/wrapper/libxgboostwrapper.so
 
+  other-extensions: CPP
+              , ForeignFunctionInterface
+              , EmptyDataDecls
+              , RecordWildCards
    

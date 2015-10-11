@@ -5,7 +5,7 @@
 module Xgboost.Example (
   test, test3,
    
-  new, MatrixHandle, DMH, Ptr, cnew,
+  new, MatrixHandle, DMH, Ptr, cnew
 ) where
 
 import qualified Foreign
@@ -64,6 +64,7 @@ infixl 0 ->>
 c ->> m = m c
 
 foreign import ccall "_Znwm" cnew :: Foreign.Word -> IO (Ptr ())
+
 
 {-
   import Xgboost

@@ -1,3 +1,7 @@
+{-# LANGUAGE ForeignFunctionInterface #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# CFILES xgboost_wrapper.cpp #-} 
+
 -- https://wiki.haskell.org/CPlusPlus_from_Haskell
 -- However, we use the C interface to Xgboost.
 
@@ -48,6 +52,7 @@ module Xgboost.Foreign (
 
 ) where
 
+import qualified Foreign
 import Foreign.C
 import Foreign.Ptr
 
@@ -73,7 +78,7 @@ type ModelDump     = Ptr CString
  */
 XGB_DLL const char *XGBGetLastError();
 -}
-foreign import ccall "XGBGetLastError"
+foreign import ccall unsafe "xgboost_wrapper.h XGBGetLastError"
   xgboostGetLastError :: CString -> IO CInt
 
 {-
@@ -88,7 +93,7 @@ XGB_DLL int XGDMatrixCreateFromFile(const char *fname,
                                     int silent,
                                     DMatrixHandle *out);
 -}
-foreign import ccall "XGDMatrixCreateFromCSR"
+foreign import ccall unsafe "xgboost_wrapper.h XGDMatrixCreateFromCSR"
   xgboostMatrixCreateFromCSR :: (Ptr CULong) -> (Ptr CUInt) -> FloatArray -> CULong -> CULong -> (Ptr DMatrixHandle) -> IO CInt
 
 {-
@@ -103,7 +108,7 @@ XGB_DLL int XGDMatrixCreateFromFile(const char *fname,
                                     int silent,
                                     DMatrixHandle *out);
 -}
-foreign import ccall "XGDMatrixCreateFromFile"
+foreign import ccall unsafe "xgboost_wrapper.h XGDMatrixCreateFromFile"
   xgboostMatrixCreateFromFile :: FloatArray -> CInt -> CULong -> CFloat -> (Ptr DMatrixHandle) -> IO CInt
 
 {-
@@ -122,7 +127,7 @@ XGB_DLL int XGDMatrixCreateFromMat(const float *data,
                                    float  missing,
                                    DMatrixHandle *out);
 -}
-foreign import ccall "XGDMatrixCreateFromMat"
+foreign import ccall unsafe "xgboost_wrapper.h XGDMatrixCreateFromMat"
   xgboostMatrixCreateFromMat :: FloatArray -> CULong -> CULong -> CFloat -> (Ptr DMatrixHandle) -> IO CInt
 
 {-
@@ -139,7 +144,7 @@ XGB_DLL int XGDMatrixSliceDMatrix(DMatrixHandle handle,
                                   bst_ulong len,
                                   DMatrixHandle *out);
 -}
-foreign import ccall "XGDMatrixSliceDMatrix"
+foreign import ccall unsafe "xgboost_wrapper.h XGDMatrixSliceDMatrix"
   xgboostMatrixSliceDMatrix :: DMatrixHandle -> (Ptr CInt) -> CULong -> (Ptr DMatrixHandle) -> IO CInt
 
 {-
@@ -149,7 +154,7 @@ foreign import ccall "XGDMatrixSliceDMatrix"
  */
 XGB_DLL int XGDMatrixFree(void *handle);
 -}
-foreign import ccall "XGDMatrixFree"
+foreign import ccall unsafe "xgboost_wrapper.h XGDMatrixFree"
   xgboostMatrixFree :: DMatrixHandle -> IO CInt
 
 {-
@@ -163,7 +168,7 @@ foreign import ccall "XGDMatrixFree"
 XGB_DLL int XGDMatrixSaveBinary(DMatrixHandle handle,
                                 const char *fname, int silent);
 -}
-foreign import ccall "XGDMatrixSaveBinary"
+foreign import ccall unsafe "xgboost_wrapper.h XGDMatrixSaveBinary"
   xgboostMatrixSaveBinary :: DMatrixHandle -> CString -> CInt -> IO CInt
 
 {-
@@ -180,7 +185,7 @@ XGB_DLL int XGDMatrixSetFloatInfo(DMatrixHandle handle,
                                   const float *array,
                                   bst_ulong len);
 -}
-foreign import ccall "XGDMatrixSetFloatInfo"
+foreign import ccall unsafe "xgboost_wrapper.h XGDMatrixSetFloatInfo"
   xgboostMatrixSetFloatInfo :: DMatrixHandle -> CString -> FloatArray -> CULong -> IO CInt
 
 {-
@@ -197,7 +202,7 @@ XGB_DLL int XGDMatrixSetUIntInfo(DMatrixHandle handle,
                                  const unsigned *array,
                                  bst_ulong len);
 -}
-foreign import ccall "XGDMatrixSetUIntInfo"
+foreign import ccall unsafe "xgboost_wrapper.h XGDMatrixSetUIntInfo"
   xgboostMatrixSetUIntInfo :: DMatrixHandle -> CString -> (Ptr CUInt) -> CULong -> IO CInt
 
 {-
@@ -212,7 +217,7 @@ XGB_DLL int XGDMatrixSetGroup(DMatrixHandle handle,
                               const unsigned *group,
                               bst_ulong len);
 -}
-foreign import ccall "XGDMatrixSetGroup"
+foreign import ccall unsafe "xgboost_wrapper.h XGDMatrixSetGroup"
   xgboostMatrixSetGroup :: DMatrixHandle -> (Ptr CUInt) -> CULong -> IO CInt
 
 {-
@@ -228,7 +233,7 @@ XGB_DLL int XGDMatrixGetFloatInfo(const DMatrixHandle handle,
                                   bst_ulong* out_len,
                                   const float **out_dptr);
 -}
-foreign import ccall "XGMMatrixGetFloatInfo"
+foreign import ccall unsafe "xgboost_wrapper.h XGDMatrixGetFloatInfo"
   xgboostMatrixGetFloatInfo :: DMatrixHandle -> CString -> (Ptr CULong) -> IO (Ptr FloatArray)
 
 {-
@@ -244,7 +249,7 @@ XGB_DLL int XGDMatrixGetUIntInfo(const DMatrixHandle handle,
                                  bst_ulong* out_len,
                                  const unsigned **out_dptr);
 -}
-foreign import ccall "XGMMatrixGetUIntInfo"
+foreign import ccall unsafe "xgboost_wrapper.h XGDMatrixGetUIntInfo"
   xgboostMatrixGetUIntInfo :: DMatrixHandle -> CString -> (Ptr CULong) -> IO (Ptr (Ptr CUInt))
 
 {-
@@ -256,7 +261,7 @@ foreign import ccall "XGMMatrixGetUIntInfo"
 XGB_DLL int XGDMatrixNumRow(DMatrixHandle handle,
                             bst_ulong *out);
 -}
-foreign import ccall "XGDMatrixNumRow"
+foreign import ccall unsafe "xgboost_wrapper.h XGDMatrixNumRow"
   xgboostMatrixNumRow :: DMatrixHandle -> (Ptr CULong) -> IO CInt
 
 {-
@@ -268,7 +273,7 @@ foreign import ccall "XGDMatrixNumRow"
 XGB_DLL int XGDMatrixNumCol(DMatrixHandle handle,
                             bst_ulong *out);
 -}
-foreign import ccall "XGDMatrixNumCol"
+foreign import ccall unsafe "xgboost_wrapper.h XGDMatrixNumCol"
   xgboostMatrixNumCol :: DMatrixHandle -> (Ptr CULong) -> IO CInt
 
 {-
@@ -283,7 +288,7 @@ XGB_DLL int XGBoosterCreate(void* dmats[],
                             bst_ulong len,
                             BoosterHandle *out);
 -}
-foreign import ccall "XGBoosterCreate"
+foreign import ccall unsafe "xgboost_wrapper.h XGBoosterCreate"
   xgboostBoosterCreate :: (Ptr DMatrixHandle) -> CULong -> (Ptr BoosterHandle) -> IO CInt
 
 {-
@@ -294,7 +299,7 @@ foreign import ccall "XGBoosterCreate"
  */
 XGB_DLL int XGBoosterFree(BoosterHandle handle);
 -}
-foreign import ccall "XGBoosterFree"
+foreign import ccall unsafe "xgboost_wrapper.h XGBoosterFree"
   xgboostBoosterFree :: BoosterHandle -> IO CInt
 
 {-
@@ -309,7 +314,7 @@ XGB_DLL int XGBoosterSetParam(BoosterHandle handle,
                               const char *name,
                               const char *value);
 -}
-foreign import ccall "XGBoosterSetParam"
+foreign import ccall unsafe "xgboost_wrapper.h XGBoosterSetParam"
   xgboostBoosterSetParam :: BoosterHandle -> CString -> CString -> IO CInt
 
 {-
@@ -324,7 +329,7 @@ XGB_DLL int XGBoosterUpdateOneIter(BoosterHandle handle,
                                    int iter,
                                    DMatrixHandle dtrain);
 -}
-foreign import ccall "XGBoosterUpdateOneIter"
+foreign import ccall unsafe "xgboost_wrapper.h XGBoosterUpdateOneIter"
   xgboostBoosterUpdateOneIter :: BoosterHandle -> CInt -> DMatrixHandle -> IO CInt
 
 {-
@@ -344,7 +349,7 @@ XGB_DLL int XGBoosterBoostOneIter(BoosterHandle handle,
                                   float *hess,
                                   bst_ulong len);
 -}
-foreign import ccall "XGBoosterBoostOneIter"
+foreign import ccall unsafe "xgboost_wrapper.h XGBoosterBoostOneIter"
   xgboostBoosterBoostOneIter :: BoosterHandle -> DMatrixHandle -> FloatArray -> FloatArray  -> CULong -> IO CInt
 
 {-
@@ -365,7 +370,7 @@ XGB_DLL int XGBoosterEvalOneIter(BoosterHandle handle,
                                  bst_ulong len,
                                  const char **out_result);
 -}
-foreign import ccall "XGBoosterEvalOneIter"
+foreign import ccall unsafe "xgboost_wrapper.h XGBoosterEvalOneIter"
   xgboostBoosterEvalOneIter :: BoosterHandle -> CInt -> DMatrixHandle -> (Ptr CString) -> CULong -> (Ptr CString) -> IO CInt
 
 {-
@@ -390,7 +395,7 @@ XGB_DLL int XGBoosterPredict(BoosterHandle handle,
                              bst_ulong *out_len,
                              const float **out_result);
 -}
-foreign import ccall "XGBoosterPredict"
+foreign import ccall unsafe "xgboost_wrapper.h XGBoosterPredict"
   xgboostBoosterPredict :: BoosterHandle -> DMatrixHandle -> CInt -> CUInt -> (Ptr FloatArray) -> IO CInt
 
 {-
@@ -403,7 +408,7 @@ foreign import ccall "XGBoosterPredict"
 XGB_DLL int XGBoosterLoadModel(BoosterHandle handle,
                                const char *fname);
 -}
-foreign import ccall "XGBoosterLoadModel"
+foreign import ccall unsafe "xgboost_wrapper.h XGBoosterLoadModel"
   xgboostBoosterLoadModel :: BoosterHandle -> CString -> IO CInt
 
 {-
@@ -416,7 +421,7 @@ foreign import ccall "XGBoosterLoadModel"
 XGB_DLL int XGBoosterSaveModel(BoosterHandle handle,
                                const char *fname);
 -}
-foreign import ccall "XGBoosterSaveModel"
+foreign import ccall unsafe "xgboost_wrapper.h XGBoosterSaveModel"
   xgboostBoosterSaveModel :: BoosterHandle -> CString -> IO CInt
 
 {-
@@ -431,7 +436,7 @@ XGB_DLL int XGBoosterLoadModelFromBuffer(BoosterHandle handle,
                                          const void *buf,
                                          bst_ulong len);
 -}
-foreign import ccall "XGBoosterLoadModelFromBuffer"
+foreign import ccall unsafe "xgboost_wrapper.h XGBoosterLoadModelFromBuffer"
   xgboostBoosterLoadModelFromBuffer :: BoosterHandle -> Ptr () -> CULong -> IO CInt
 
 {-
@@ -447,7 +452,7 @@ XGB_DLL int XGBoosterGetModelRaw(BoosterHandle handle,
                                  bst_ulong *out_len,
                                  const char **out_dptr);
 -}
-foreign import ccall "XGBoosterGetModelRaw"
+foreign import ccall unsafe "xgboost_wrapper.h XGBoosterGetModelRaw"
   xgboostBoosterGetModelRaw :: BoosterHandle -> CULong -> (Ptr CString) -> IO CInt
 
 {-
@@ -466,7 +471,7 @@ XGB_DLL int XGBoosterDumpModel(BoosterHandle handle,
                                bst_ulong *out_len,
                                const char ***out_dump_array);
 -}
-foreign import ccall "XGBoosterDumpModel"
+foreign import ccall unsafe "xgboost_wrapper.h XGBoosterDumpModel"
   xgboostBoosterDumpModel :: BoosterHandle -> CString -> CInt -> (Ptr CULong) -> (Ptr ModelDump) -> IO CInt
 
 {-
@@ -489,7 +494,7 @@ XGB_DLL int XGBoosterDumpModelWithFeatures(BoosterHandle handle,
                                            bst_ulong *len,
                                            const char ***out_models);
 -}
-foreign import ccall "XGBoosterDumpModelWithFeatures"
+foreign import ccall unsafe "xgboost_wrapper.h XGBoosterDumpModelWithFeatures"
   xgboostBoosterDumpModelWithFeatures :: BoosterHandle -> CInt -> (Ptr CString) -> (Ptr CString) -> CInt -> (Ptr CULong) -> (Ptr ModelDump) -> IO CInt
 
 
