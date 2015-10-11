@@ -252,7 +252,11 @@ foreign import ccall "XGBoosterCreate"
  * \return 0 when success, -1 when failure happens
  */
 XGB_DLL int XGBoosterFree(BoosterHandle handle);
+-}
+foreign import ccall "XGBoosterFree"
+  xgboostBoosterFree :: BoosterHandle -> IO CInt
 
+{-
 /*!
  * \brief set parameters
  * \param handle handle
@@ -263,6 +267,11 @@ XGB_DLL int XGBoosterFree(BoosterHandle handle);
 XGB_DLL int XGBoosterSetParam(BoosterHandle handle,
                               const char *name,
                               const char *value);
+-}
+foreign import ccall "XGBoosterSetParam"
+  xgboostBoosterSetParam :: BoosterHandle -> CString -> CString -> IO CInt
+
+{-
 /*!
  * \brief update the model in one round using dtrain
  * \param handle handle
@@ -273,6 +282,11 @@ XGB_DLL int XGBoosterSetParam(BoosterHandle handle,
 XGB_DLL int XGBoosterUpdateOneIter(BoosterHandle handle,
                                    int iter,
                                    DMatrixHandle dtrain);
+-}
+foreign import ccall "XGBoosterUpdateOneIter"
+  xgboostBoosterUpdateOneIter :: BoosterHandle -> CInt -> DMatrixHandle -> IO CInt
+
+{-
 /*!
  * \brief update the model, by directly specify gradient and second order gradient,
  *        this can be used to replace UpdateOneIter, to support customized loss function
@@ -288,6 +302,11 @@ XGB_DLL int XGBoosterBoostOneIter(BoosterHandle handle,
                                   float *grad,
                                   float *hess,
                                   bst_ulong len);
+-}
+foreign import ccall "XGBoosterBoostOneIter"
+  xgboostBoosterBoostOneIter :: BoosterHandle -> DMatrixHandle -> (Ptr CFloat) -> (Ptr CFloat)  -> CULong -> IO CInt
+
+{-
 /*!
  * \brief get evaluation statistics for xgboost
  * \param handle handle
@@ -304,6 +323,11 @@ XGB_DLL int XGBoosterEvalOneIter(BoosterHandle handle,
                                  const char *evnames[],
                                  bst_ulong len,
                                  const char **out_result);
+-}
+foreign import ccall "XGBoosterEvalOneIter"
+  xgboostBoosterEvalOneIter :: BoosterHandle -> CInt -> DMatrixHandle -> (Ptr CString) -> CULong -> (Ptr CString) -> IO CInt
+
+{-
 /*!
  * \brief make prediction based on dmat
  * \param handle handle
