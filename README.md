@@ -47,3 +47,9 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+### Authors
+
+This wrapper library was created by Robert Krzyzanowski, technoguyrob@gmail.com.
+The underlying library was designed by Tianqi Chen and his team at DMLC 
+(Distributed (Deep) Machine Learning Common).
+
