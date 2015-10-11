@@ -26,6 +26,9 @@ foreign import ccall "XGDMatrixCreateFromFile"
 foreign import ccall "XGDMatrixCreateFromMat"
   xgboostMatrixCreateFromMat :: (Ptr CFloat) -> CULong -> CULong -> CFloat -> (Ptr DMatrixHandle) -> IO CInt
 
+foreign import ccall "XGDMatrixSliceDMatrix"
+  xgboostMatrixSliceDMatrix :: DMatrixHandle -> (Ptr CInt) -> CULong -> (Ptr DMatrixHandle) -> IO CInt
+
 foreign import ccall "XGDMatrixNumRow"
   xgboostMatrixNumRow :: DMatrixHandle -> (Ptr CULong) -> IO CInt
 
