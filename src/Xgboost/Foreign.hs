@@ -18,7 +18,7 @@ foreign import ccall "XGBGetLastError"
   xgboostGetLastError :: CString -> IO CInt
 
 foreign import ccall "XGDMatrixCreateFromCSR"
-  xgboostMatrixCreateFromFile :: (Ptr CULong) -> (Ptr CUInt) -> (Ptr CFloat) -> CULong -> CULong -> (Ptr DMatrixHandle) -> IO CInt
+  xgboostMatrixCreateFromCSR :: (Ptr CULong) -> (Ptr CUInt) -> (Ptr CFloat) -> CULong -> CULong -> (Ptr DMatrixHandle) -> IO CInt
 
 foreign import ccall "XGDMatrixCreateFromFile"
   xgboostMatrixCreateFromFile :: (Ptr CFloat) -> CInt -> CULong -> CFloat -> (Ptr DMatrixHandle) -> IO CInt
